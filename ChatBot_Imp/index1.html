@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"> -->
+
+    <title>ChatBot responsive</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js">
+
+    <style src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js">
+
+.webchat--css-yqgip-1g5j31m.webchat__bubble.webchat__bubble--from-user .webchat__bubble__content {
+    background: #007bff;
+    border-color: rgb(230, 230, 230);
+    border-radius: 2px;
+    border-style: solid;
+    border-width: 1px;
+    color: #e9ecef;
+    min-height: 38px;
+}
+
+</style>
+
+<!-- CSS FOR BOT -->
+<style>
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #eee;
+  color: #111;
+  height: 100vh;
+}
+button{
+ /* margin: 0.75rem;
+  padding: 0.25rem;  */
+  cursor: pointer;
+}
+
+/* Modal */
+.modal {
+  position: fixed; 
+  left: 0;
+  top: 0;
+  width: 95%;
+  height: 95%;
+  display: none;
+  justify-content: center;
+  align-items: flex-start; /* or center */
+  z-index: 1000; /* depending on what z-index values exist in your page, in order for the modal layer to sit on top of other content */
+  overflow: auto; /* enable scrolling if needed - although this is not really necessary since we are going take care of overflow in modal-content */
+  background-color: rgba(0,0,0,0.8);
+}
+.modal.modal-show {
+  animation: fadeIn 0.1s ease-in-out forwards;
+}
+.modal.modal-hide {
+  animation: fadeOut 0.1s ease-in-out 0.1s forwards;
+}
+
+.modal-content {
+  position: relative;
+  background-color: #fff;
+  margin: 2rem;
+  padding: 2rem;
+  border-radius: 0.25rem;
+  width: 25%;
+  max-height: 130%;
+  overflow: auto;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+} 
+.modal.modal-show .modal-content {
+  animation: fadeInDown 0.3s ease-in-out forwards;
+}
+.modal.modal-hide .modal-content {
+  animation: fadeOutUp 0.2s ease-in-out forwards;
+}
+.modal-content h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.modal-content p {
+  margin: 1rem 0;
+  line-height: 1.5rem;
+}
+.modal-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 1.75rem;
+  font-weight: bold;
+  padding: 0 0.75rem;
+  color: rgba(0,0,0,0.2);
+  cursor: pointer;
+  user-select: none;
+}
+.modal-close:hover, .modal-close:focus {
+  color: rgba(0,0,0,0.5);
+}
+.icon{
+  border: 0;
+    background-color: rgba(238, 238, 238, 0);
+    position: fixed;
+    bottom: 41px;
+    right: 0px;
+    z-index: 1000;
+    padding: -2px;
+    font-size: 80px;
+    /* color: #fff; */
+    color: #007bff;
+    cursor: pointer;
+    margin-right: 35px;
+    margin-bottom: 25px;
+    height: 80px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); 
+  }
+}
+@keyframes fadeOutUp {
+  0% { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+}
+
+@media(max-width: 992px) {
+  html { font-size: 14px; }
+  .modal-content { width: 80%; }
+}
+@media(max-width:767px) {
+  html { font-size: 12px; }
+  .modal-content { padding: 2rem 1rem 1rem 1rem; width: 90%; }
+  .modal-content h1 { margin-bottom: 1.5rem; }
+}
+     </style>
+     <!-- End of BOT css -->
+   
+
+    <!-- Bootstrap css -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- navbar start -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- <div class="container"> -->
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">ChatBot</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <!-- col-auto-start -->
+      <div class="col-auto">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="#">About Us</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Services
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Web Designing</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Graphic Designing</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="#">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="#">Contact Us</a>
+          </li>
+
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+      </div>
+    </div>
+  </nav>
+
+<!-- navbar end -->
+
+<!-- side menu bar start -->
+<!-- Vertical navbar -->
+<div class="vertical-nav bg-white" id="sidebar">
+  <div class="py-4 px-3 mb-4 bg-light">
+    <div class="media d-flex align-items-center">
+      <img loading="lazy" src="images/chat-bot-for-social-networking.jpg" alt="..." width="80" height="80" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+      <div class="media-body">
+        <h4 class="m-0">Hi Everyone!</h4>
+        <p class="font-weight-normal text-muted mb-0">Welcome to Menu</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Dashboard</p>
+
+  <ul class="nav flex-column bg-white mb-0">
+    <li class="nav-item">
+      <a href="#" class="nav-link text-dark bg-light">
+                <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
+                home
+            </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link text-dark">
+                <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+                about
+            </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link text-dark">
+                <i class="fa fa-cubes mr-3 text-primary fa-fw"></i>
+                services
+            </a>
+             
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link text-dark">
+                <i class="fa fa-picture-o mr-3 text-primary fa-fw"></i>
+                Gallery
+            </a>
+    </li>
+  </ul>
+
+  <p class="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0">Charts</p>
+
+  <ul class="nav flex-column bg-white mb-0">
+    <li class="nav-item">
+      <a href="#" class="nav-link text-dark">
+                <i class="fa fa-area-chart mr-3 text-primary fa-fw"></i>
+                area charts
+            </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link text-dark">
+                <i class="fa fa-bar-chart mr-3 text-primary fa-fw"></i>
+                bar charts
+            </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link text-dark">
+                <i class="fa fa-pie-chart mr-3 text-primary fa-fw"></i>
+                pie charts
+            </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link text-dark">
+                <i class="fa fa-line-chart mr-3 text-primary fa-fw"></i>
+                line charts
+            </a>
+    </li>
+  </ul>
+</div>
+<!-- End vertical navbar -->
+
+
+
+<!-- Page content holder -->
+<div class="page-content p-5" id="content">
+  <!-- Toggle button -->
+  <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">Menu</small></button>
+
+  <!-- Demo content -->
+  <h2 class="display-4 text-white">ChatBot Project</h2>
+  <p class="lead text-white mb-0">Build a flexible website and media objects.</p> 
+  <div class="separator"></div>
+  <div class="row text-white">
+    <div class="col-lg-7">
+      <p class="lead">Demo Paragraph......PerkMinds is one of the leading website designing, website development, and digital marketing company in India. Our team has gathered its expertise through sheer experience and knowledge. PerkMinds has been providing our clients with appealing websites 
+        for a very long time now. The main aim of our company’s existence is to serve our clients with the most effective and efficient services to fulfill their requirements.</p>
+      <p class="lead">PerkMinds uses the latest technology and advanced tools to make design and develop websites. We aim to add the most recent and most artistic features to websites to create a user-friendly website. If you are looking for an attractive and responsive 
+        website and the responsive web development services in Delhi. Then, PerkMinds is there for you. PerkMinds is the best website designing company in India. Whether a tech giant or a small company. We serve all and aim to provide the best services in Delhi. We are 
+        known for creating appealing and user-friendly websites for our clients at reasonable costs.
+      </p> 
+      <p class="lead">Once our clients have provided us with details of its requirements for the websites, we give you an estimated cost for the same. Our expert team is highly experienced and professional in website designing and website development along with digital 
+        marketing services to boost the website’s traffic because what good is a website if no one can reach it? If you want such a website, PerkMinds is the one-stop for you for all your needs and requirement.
+
+        We offer you a wide variety of services including website development in Delhi and web designing. PerkMinds one of the leading digital marketing agency in Delhi, helps you increase the visibility and traffic of your website as well as marketing your product online.
+      </p>
+      <p class="lead">Our expert teams at PerkMinds, identify and analyse our client’s requirements and build a design that can fulfill all the requirements of the clients along with being appealing and user- friendly website. This website development company in India is well
+         familiar with various CMS (content management system) and can customize CMS for your requirement with full proficiency while adding creativity to the website. If in the case of e-commerce website development, we successfully integrate various payment portals to the website.</p>
+      <p class="lead">We at PerkMinds are keen to serve our clients, our main aim is to serve the clients with the most efficient and effective services which can be of their use and fulfill their particular demands and requirements. PerkMinds provide the best web development 
+        services in Delhi at reasonable rates. Our in-house expert team is always up to serve the clients with the best of their abilities to fulfill their requirements and provide them with 100% satisfaction. If you need a custom quote contact us now!
+
+
+      </p>
+    </div>
+    <div class="col-lg-5">
+      <p class="lead">Apart from website designing and digital marketing. We also provide services in graphic designing, software development, mobile application development, game application development, online marketing, search engine optimization (SEO), graphic designing,
+         social media marketing, pay per click(PPC), etc. along with all this our services can be specially tailored to meet the individual needs and we respect our clients if there are any other needs.</p>
+      <p class="lead">Perk Minds serves and dedicated to help the businesses to achieve their business objectives in most efficient way. Perk Minds is totally dedicated to providing its clients with highest standard of products and quality services.
+
+        Our Vision
+        
+      </p>
+      <p class="lead">Perk Minds is a company with apparent focus on high quality, timely delivery and cost effective solutions. We focus our self on providing best in class unique and creative web designing and internet representation.</p>
+      <p class="lead">Perkminds is the best website development company in India providing website solutions worldwide. We with sole goal of creating websites for businesses and organisation, are committed to our cause and are continuously 
+        making website better through BEST SEO services in India. Perkminds is able to provide their customers with a 100% satisfaction through the team’s knowledge, dedication and hard work.
+      </p>
+    </div>
+  </div>
+    
+        </div>
+    </div>
+
+<!-- POP UP CHAT BOX WITH IFRAME BASED ON JSON MS KNOWLEDGE-BASE -->
+  
+    <button class="icon" data-modal-target="modal1"><img class="icon" src="images/bot-icon3.png" alt="chatbot-icon">
+    </button>
+     <!--<i class="fa fa-paper-plane" aria-hidden="true"></i> modal triggering buttons selection by "data-modal-target" attribute. Alternatively, we could define a class e.g. "modal-trigger" -->
+    <div class="modal" id="modal1"> <!-- This is the background overlay -->
+      <div class="modal-content"> <!-- This is the actual modal/popup box -->
+        <span class="modal-close">&times;</span>
+    <iframe src='https://webchat.botframework.com/embed/Autobot19?s=8O9cZFxFwek.56R-ITi1LFiF2ixCk9fKINurBk8m8rycRX75rqdjAak'  style='min-width: 200px; width: 100%; height:100%; min-height: 400px; border-radius: 10px;'></iframe>
+      </div>
+    </div>
+    <div class="modal" id="modal2">
+      <div class="modal-content">
+        <span class="modal-close">&times;</span>
+       </div>
+    </div>
+
+    <!-- POP UP BOX END -->
+
+    <!-- Jquery and JavaScript for CHATBOT -->
+<script>
+  const modalTriggerButtons = document.querySelectorAll("[data-modal-target]");
+const modals = document.querySelectorAll(".modal");
+const modalCloseButtons = document.querySelectorAll(".modal-close");
+
+modalTriggerButtons.forEach(elem => {
+  elem.addEventListener("click", event => toggleModal(event.currentTarget.getAttribute("data-modal-target")));
+});
+modalCloseButtons.forEach(elem => {
+  elem.addEventListener("click", event => toggleModal(event.currentTarget.closest(".modal").id));
+});
+modals.forEach(elem => {
+  elem.addEventListener("click", event => {
+    if(event.currentTarget === event.target) toggleModal(event.currentTarget.id);
+  });
+});
+
+// Maybe also close with "Esc"...
+document.addEventListener("keydown", event => {
+  if(event.keyCode === 27 && document.querySelector(".modal.modal-show")) {
+    toggleModal(document.querySelector(".modal.modal-show").id);
+  }
+});
+
+function toggleModal(modalId) {
+  const modal = document.getElementById(modalId);
+
+  if(getComputedStyle(modal).display==="flex") { // alternatively: if(modal.classList.contains("modal-show"))
+    modal.classList.add("modal-hide");
+    setTimeout(() => {
+      document.body.style.overflow = "initial"; // Optional: in order to enable/disable page scrolling while modal is hidden/shown - in this case: "initial" <=> "visible"
+      modal.classList.remove("modal-show", "modal-hide");
+      modal.style.display = "none";      
+    }, 200);
+  }
+  else {
+    document.body.style.overflow = "hidden"; // Optional: in order to enable/disable page scrolling while modal is hidden/shown
+    modal.style.display = "flex";
+    modal.classList.add("modal-show");
+  }
+}
+</script>
+<!-- end of chatbot script -->
+
+
+</div>
+<!-- End demo content -->
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> -->
+
+<!-- side menubar end -->
+
+    <!-- jQuery first, then Popper.js, then Bootstrap js -->
+     <!-- <script src="js/bootstrap.bundle.min.js"></script> -->
+     <script src="js/popper.min.js"></script> 
+     <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
